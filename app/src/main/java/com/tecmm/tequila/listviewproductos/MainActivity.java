@@ -87,12 +87,20 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.emergente1:
                 String nombre =lProductos.get(info.position);
+                Intent i = new Intent(this, Modificar.class);
+                i.putExtra("nombre", lProductos.get(info.position).toString());
+                i.putExtra("categoria", lcategoria.get(info.position).toString());
+                i.putExtra("Posicion", info.position);
+                startActivityForResult(i,1234);
                 Toast.makeText(this, "Modificando " + nombre, Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.emergente2:
                 String nombre2 = lProductos.get(info.position);
                 /*Toast.makeText(this, "Eliminando " + nombre2, Toast.LENGTH_SHORT).show();*/
+                lProductos.remove(info.position);
+                lcategoria.remove(info.position);
+                actualizarTabla();
 
                 break;
         }
@@ -102,9 +110,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        lProductos.add(data.getStringExtra("nombre"));
-        lcategoria.add(data.getStringExtra("categoria"));
-        actualizarTabla();
+        if (requestCode == 123) {
+            lProductos.add(data.getStringExtra("nombre"));
+            lcategoria.add(data.getStringExtra("categoria"));
+            actualizarTabla();
+        }
+        else if (requestCode == 1234){
+            int posicion = data.getIntExtra("pos", -1);
+            lProductos.set(posicion, data.getStringExtra("nombre"));
+            lcategoria.set(posicion, data.getStringExtra("categoria"));
+            actualizarTabla();
+        }
     }
 
     public void llamaActividad (View x) {

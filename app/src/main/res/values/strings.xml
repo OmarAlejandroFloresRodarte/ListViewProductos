@@ -4,4 +4,5 @@
     <string name="hint_txt_add"> Hint </string>
     <string name="title_spinner"> Categoria </string>
     <string name="label_btn_add"> Agregar </string>
+    <string name="label_btn_mod"> Modificar </string>
 </resources>
